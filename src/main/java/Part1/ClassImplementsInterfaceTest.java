@@ -10,13 +10,7 @@ public class ClassImplementsInterfaceTest {
         Class implementor = ArrayList.class;
         Class implemented = List.class;
         //When
-        Class[] interfaces = implementor.getInterfaces();
-        boolean result = false;
-        for(Class cl : interfaces) {
-            if(cl == List.class) {
-                result = true;
-            }
-        }
+        boolean result = ClassImplementsInterface.classImplementsInterface(implementor, implemented);
         //Then
         Assert.assertTrue(result);
     }
@@ -27,14 +21,8 @@ public class ClassImplementsInterfaceTest {
         Class implementor = Math.class;
         Class implemented = List.class;
         //When
-        Class[] interfaces = implementor.getInterfaces();
-        boolean result = false;
-        for(Class cl : interfaces) {
-            if(cl == List.class) {
-                result = true;
-            }
-        }
+        boolean result = ClassImplementsInterface.classImplementsInterface(implementor, implemented);
         //Then
-        Assert.assertFalse(false);
+        Assert.assertFalse(result);
     }
 }
