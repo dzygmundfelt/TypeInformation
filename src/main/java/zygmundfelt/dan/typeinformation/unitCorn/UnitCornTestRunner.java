@@ -1,42 +1,33 @@
 package zygmundfelt.dan.typeinformation.unitCorn;
 
-import java.lang.reflect.InvocationTargetException;
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-
-/*
-    Not a clue right now how to generate a result from this method, sitting in this class.
-
-*/
+import org.junit.*;
 
 
 public class UnitCornTestRunner {
 
     ArrayList<Result> results;
 
-    static String runTest(Class c, String methodName) {
+    static Exception runTest(Class c, String methodName) {
+
         Object o;
         try {
             o = c.newInstance();
         } catch(Exception e) {
-            return "Cannot create new instance of " + c + "\n";
+            return e;
         }
 
         Method method = getMethod(c, methodName);
 
         try {
             method.invoke(o);
-        } catch (IllegalAccessException e) {
-            return "An IllegalAccessException occurred.";
-        } catch (IllegalArgumentException e) {
-            return "An IllegalArgumentException occurred.";
-        } catch (InvocationTargetException e) {
-            return "An InvocationTargetException occurred.";
         } catch (Exception e) {
-            return "There was a different kind of exception.";
+            return e;
         }
 
-        return "SUCCESS!";
+        return null;
 
     }
 
@@ -55,19 +46,21 @@ public class UnitCornTestRunner {
         return null;
     }
 
+    @Test
+    String[] getJUnitAnnotatedMethods(Class c) {
+        return null;
+    }
+
     public static void main(String[] args) {
-        Method method = getMethod(Dummy.class, "getANumber");
-        System.out.println(method.getName());
-        Dummy dummy = new Dummy();
-        try{method.invoke(dummy);
-        } catch (IllegalAccessException e) {
-            System.out.print("An IllegalAccessException occurred.");
-        } catch (IllegalArgumentException e) {
-            System.out.println("An IllegalArgumentException occurred.");
-        } catch (InvocationTargetException e) {
-            System.out.println("An InvocationTargetException occurred.");
+        Method[] methods = UnitCornTestRunner.class.getDeclaredMethods();
+        for(Method m : methods) {
+            System.out.println(m.getName());
+            Annotation[] annotations = m.getAnnotations();
+            for(Annotation a : annotations) {
+                System.out.println(a.toString());
+            }
         }
 
-
     }
+
 }
