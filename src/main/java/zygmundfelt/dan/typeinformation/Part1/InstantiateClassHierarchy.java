@@ -1,7 +1,5 @@
-package Part1;
-import org.junit.*;
+package zygmundfelt.dan.typeinformation.Part1;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.TreeMap;
 

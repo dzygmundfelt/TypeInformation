@@ -1,4 +1,4 @@
-package zygmundfelt.dan.unitCorn;
+package zygmundfelt.dan.typeinformation.unitCorn;
 
 public class Result {
 

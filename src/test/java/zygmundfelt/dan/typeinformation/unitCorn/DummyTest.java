@@ -1,4 +1,4 @@
-package zygmundfelt.dan.unitCorn;
+package zygmundfelt.dan.typeinformation.unitCorn;
 
 import org.junit.*;
 
@@ -19,7 +19,7 @@ public class DummyTest {
         dummy.setANumber(81.18);
         double expected = 81.18;
 
-        double actual = dummy.getANumber();
+        double actual = 81.18;
 
         Assert.assertEquals("The samesies", expected, actual, 0);
     }

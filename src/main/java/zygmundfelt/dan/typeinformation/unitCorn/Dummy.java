@@ -1,5 +1,4 @@
-package zygmundfelt.dan.unitCorn;
-import org.junit.*;
+package zygmundfelt.dan.typeinformation.unitCorn;
 
 public class Dummy {
 
@@ -10,14 +9,7 @@ public class Dummy {
     Dummy() {
         amIAtest = false;
         name = "Dummy";
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+        aNumber = 0.0;
     }
 
     public void setANumber(double number) {

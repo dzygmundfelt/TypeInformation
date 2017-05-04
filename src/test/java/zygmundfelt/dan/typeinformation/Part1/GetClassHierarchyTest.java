@@ -1,4 +1,4 @@
-package Part1;
+package zygmundfelt.dan.typeinformation.Part1;
 import org.junit.*;
 
 public class GetClassHierarchyTest {

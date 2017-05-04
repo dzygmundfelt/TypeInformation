@@ -1,4 +1,4 @@
-package Part1;
+package zygmundfelt.dan.typeinformation.Part1;
 
 import java.util.ArrayList;
 
@@ -24,16 +24,5 @@ public class GetClassHierarchy {
         }
 
         return result;
-    }
-
-    public static void main(String[] args) {
-
-        Integer integer = 77;
-        ArrayList list = new ArrayList();
-        Object o = new Object();
-
-        System.out.println(getClassHierarchy(integer));
-        System.out.println(getClassHierarchy(list));
-        System.out.println(getClassHierarchy(o));
     }
 }

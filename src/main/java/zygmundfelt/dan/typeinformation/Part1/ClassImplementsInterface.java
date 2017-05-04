@@ -1,4 +1,4 @@
-package Part1;
+package zygmundfelt.dan.typeinformation.Part1;
 
 public class ClassImplementsInterface {
 

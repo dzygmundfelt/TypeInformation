@@ -1,4 +1,4 @@
-package Part1;
+package zygmundfelt.dan.typeinformation.Part1;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
