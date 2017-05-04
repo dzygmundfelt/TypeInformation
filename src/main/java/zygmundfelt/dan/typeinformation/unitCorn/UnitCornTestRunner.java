@@ -10,29 +10,28 @@ public class UnitCornTestRunner {
 
     ArrayList<Result> results;
 
-    static Exception runTest(Class c, String methodName) {
+    static String runTest(Class cls, String methodName) {
 
         Object o;
         try {
-            o = c.newInstance();
+            o = cls.newInstance();
         } catch(Exception e) {
-            return e;
+            return e.toString();
         }
 
-        Method method = getMethod(c, methodName);
+        Method method = getMethod(cls, methodName);
 
         try {
             method.invoke(o);
         } catch (Exception e) {
-            return e;
+            return e.toString();
         }
 
         return null;
-
     }
 
-    static Method getMethod(Class c, String methodName) {
-        Method[] methods = c.getDeclaredMethods();
+    static Method getMethod(Class cls, String methodName) {
+        Method[] methods = cls.getDeclaredMethods();
         for(Method m : methods) {
             if(m.getName().equals(methodName)) {
                 return m;
@@ -41,14 +40,26 @@ public class UnitCornTestRunner {
         return null;
     }
 
-    String runTests(Class c) {
+    @Test
+    String runTests(Class cls) {
 
         return null;
     }
 
-    @Test
-    String[] getJUnitAnnotatedMethods(Class c) {
-        return null;
+    static ArrayList<String> getJUnitAnnotatedMethods(Class cls) {
+        Method[] methods = cls.getDeclaredMethods();
+        ArrayList<String> annotatedMethods = new ArrayList<String>();
+
+        for(Method m : methods) {
+            Annotation[] annotations = m.getAnnotations();
+            for(Annotation a : annotations) {
+                if(a.toString().equals("@org.junit.Test")) {
+                    annotatedMethods.add(m.getName());
+                }
+            }
+        }
+
+        return annotatedMethods;
     }
 
     public static void main(String[] args) {

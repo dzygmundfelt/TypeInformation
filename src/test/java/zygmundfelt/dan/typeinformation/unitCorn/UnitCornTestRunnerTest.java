@@ -23,47 +23,52 @@ public class UnitCornTestRunnerTest {
         try {
             Class clazz = Class.forName("zygmundfelt.dan.typeinformation.unitCorn.DummyTest");
             String methodName = "setANumberTest";
-            Exception expected = null;
+            String result = UnitCornTestRunner.runTest(clazz, methodName);
 
-            Exception actual = UnitCornTestRunner.runTest(clazz, methodName);
-
-            Assert.assertEquals(expected, actual);
+            Assert.assertEquals(result, null);
         } catch (Exception e){
             Assert.fail("Couldn't create instance of DummyTest." + e.getMessage());
         }
     }
 
-    /*This test would pass if I could instantiate an InvocationTargetException.
     @Test
     public void runTestTestFail() {
-        Class cl = null;
         try {
-            Class.forName("zygmundfelt.dan.typeinformation.unitCorn.DummyTest");
+            Class clazz = Class.forName("zygmundfelt.dan.typeinformation.unitCorn.DummyTest");
+            String methodName = "setANumberTestFail";
+            String actual = UnitCornTestRunner.runTest(clazz, methodName);
+
+            Assert.assertNotEquals(actual, null);
         } catch (Exception e){
-            Assert.assertTrue("Couldn't create instance of DummyTest.", false);
+            Assert.fail("Couldn't create instance of DummyTest." + e.getMessage());
         }
-        String methodName = "setANumberTestFail";
-        Exception expected = new InvocationTargetException();
-
-        Exception actual = UnitCornTestRunner.runTest(cl, methodName);
-
-        Assert.assertEquals(expected, actual);
-    }*/
+    }
 
     @Test
-    public void testAbilityToCatchIndexOutOfBoundsException() {
-        Class clazz = null;
+    public void testIndexOutOfBoundsExceptionInTestMethod() {
         try {
-            clazz = Class.forName("zygmundfelt.dan.typeinformation.unitCorn.DummyTest");
+            Class clazz = Class.forName("zygmundfelt.dan.typeinformation.unitCorn.DummyTest");
+            String methodName = "throwsIndexOutOfBoundsException";
+            String actual = UnitCornTestRunner.runTest(clazz, methodName);
+
+            Assert.assertNotEquals(actual, null);
         } catch (Exception e){
-            Assert.assertTrue("Couldn't create instance of DummyTest.", false);
+            Assert.fail("Couldn't create instance of DummyTest." + e.getMessage());
         }
-        String methodName = "throwsIndexOutOfBoundsException";
-        Exception expected = new IndexOutOfBoundsException();
+    }
 
-        Exception actual = UnitCornTestRunner.runTest(clazz, methodName);
+    //This test is designed to fail. Be happy!
+    @Test
+    public void runTestTestWhichShouldFail() {
+        try {
+            Class clazz = Class.forName("zygmundfelt.dan.typeinformation.unitCorn.DummyTest");
+            String methodName = "setANumberTest";
+            String result = UnitCornTestRunner.runTest(clazz, methodName);
 
-        Assert.assertEquals(expected, actual);
+            Assert.assertNotEquals(result, null);
+        } catch (Exception e){
+            Assert.fail("Couldn't create instance of DummyTest." + e.getMessage());
+        }
     }
 
     @Test
@@ -75,16 +80,7 @@ public class UnitCornTestRunnerTest {
             Assert.assertTrue("Couldn't create instance of DummyTest.", false);
         }
         Method[] methods = clazz.getDeclaredMethods();
-        ArrayList<String> expected = new ArrayList<String>();
-
-        for(Method m : methods) {
-            Annotation[] annotations = m.getAnnotations();
-            for(Annotation a : annotations) {
-                if(a.toString().equals("@org.junit.Test")) {
-                    expected.add(m.toString());
-                }
-            }
-        }
+        ArrayList<String> expected = UnitCornTestRunner.getJUnitAnnotatedMethods(clazz);
 
         ArrayList<String> actual = new ArrayList<String>();
         actual.add("setANumberTest");
@@ -95,8 +91,8 @@ public class UnitCornTestRunnerTest {
         if(actual.size() != expected.size()) {
             result = false;
         } else {
-            for(int i = 0; i < actual.size(); i++) {
-                if (!expected.get(i).equals(actual.get(i))) {
+            for(String s : actual) {
+                if(!expected.contains(s)) {
                     result = false;
                 }
             }
