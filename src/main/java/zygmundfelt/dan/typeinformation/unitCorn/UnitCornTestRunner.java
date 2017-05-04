@@ -1,6 +1,7 @@
 package zygmundfelt.dan.typeinformation.unitCorn;
 
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Array;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import org.junit.*;
@@ -63,13 +64,13 @@ public class UnitCornTestRunner {
     }
 
     public static void main(String[] args) {
-        Method[] methods = UnitCornTestRunner.class.getDeclaredMethods();
-        for(Method m : methods) {
-            System.out.println(m.getName());
-            Annotation[] annotations = m.getAnnotations();
-            for(Annotation a : annotations) {
-                System.out.println(a.toString());
+        try {
+            ArrayList<String> list = getJUnitAnnotatedMethods(Class.forName("zygmundfelt.dan.typeinformation.unitCorn.UnitCornTestRunner"));
+            for(String s : list) {
+                System.out.println(s);
             }
+        } catch (Exception e) {
+            System.out.println("BOOOO.");
         }
 
     }
