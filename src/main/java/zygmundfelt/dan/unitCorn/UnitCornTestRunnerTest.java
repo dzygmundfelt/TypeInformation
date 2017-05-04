@@ -3,7 +3,7 @@ import org.junit.*;
 
 public class UnitCornTestRunnerTest {
 
-    UnitCornTestRunner unitCorn;
+    /*UnitCornTestRunner unitCorn;
     DummyTest dummyTest;
 
 
@@ -22,5 +22,5 @@ public class UnitCornTestRunnerTest {
         //Then
         Assert.assertTrue(expected.methodName.equals(actual.methodName) && expected.wasSuccess && actual.wasSuccess);
     }
-
+*/
 }
