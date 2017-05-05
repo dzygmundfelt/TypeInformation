@@ -1,7 +1,6 @@
 package zygmundfelt.dan.typeinformation.unitCorn;
 
 import java.lang.annotation.Annotation;
-import java.lang.reflect.Array;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import org.junit.*;
@@ -11,13 +10,13 @@ public class UnitCornTestRunner {
 
     ArrayList<Result> results;
 
-    static String runTest(Class cls, String methodName) {
+    static Result runTest(Class cls, String methodName) {
 
         Object o;
         try {
             o = cls.newInstance();
         } catch(Exception e) {
-            return e.toString();
+            return new Result(methodName, e.toString());
         }
 
         Method method = getMethod(cls, methodName);
@@ -25,10 +24,10 @@ public class UnitCornTestRunner {
         try {
             method.invoke(o);
         } catch (Exception e) {
-            return e.toString();
+            return new Result(methodName, e.toString());
         }
 
-        return null;
+        return new Result(methodName, "success");
     }
 
     static Method getMethod(Class cls, String methodName) {
@@ -41,12 +40,20 @@ public class UnitCornTestRunner {
         return null;
     }
 
-    @Test
+    @Test //For test class and testing in main class below
     static String runTests(Class cls) {
+        StringBuilder sb = new StringBuilder();
+        ArrayList<String> annotatedMethods = getJUnitAnnotatedMethods(cls);
 
-        return null;
+        for(String s : annotatedMethods) {
+            Result result = runTest(cls, s);
+            sb.append(result.toString());
+        }
+
+        return sb.toString();
     }
 
+    @Test //For test class and testing in main class below
     static ArrayList<String> getJUnitAnnotatedMethods(Class cls) {
         Method[] methods = cls.getDeclaredMethods();
         ArrayList<String> annotatedMethods = new ArrayList<String>();
@@ -66,21 +73,7 @@ public class UnitCornTestRunner {
     public static void main(String[] args) {
         try {
             Class cls = Class.forName("zygmundfelt.dan.typeinformation.unitCorn.UnitCornTestRunner");
-            System.out.println(cls.getName());
-            ArrayList<String> list = getJUnitAnnotatedMethods(cls);
-            for(String s : list) {
-                System.out.println(s);
-            }
-            Method[] methods = cls.getDeclaredMethods();
-            for(Method m : methods) {
-                System.out.println(m.getName());
-                Annotation[] annotations = m.getAnnotations();
-                for(Annotation a : annotations) {
-                    System.out.println(a.toString());
-                }
-            }
-
-
+            System.out.println(runTests(cls));
         } catch (Exception e) {
             System.out.println("BOOOO.");
         }

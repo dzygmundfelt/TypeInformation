@@ -2,33 +2,24 @@ package zygmundfelt.dan.typeinformation.unitCorn;
 
 public class Result {
 
-    Exception exception;
     String methodName;
+    String result;
 
-    Result(String methodName) {
+    Result(String methodName, String result) {
         this.methodName = methodName;
+        this.result = result;
     }
 
-    Result(Exception exception, String methodName) {
-        this.exception = exception;
-        this.methodName = methodName;
+    public String getResult() {
+        return result;
     }
-
-    public Exception getException() {
-        return exception;
-    }
-
 
     public String getMethodName() {
         return methodName;
     }
 
-    boolean equals(Result result) {
-        return exception.equals(result.getException()) && methodName.equals(result.getMethodName());
-    }
-
     public String toString() {
-        return "Exception is a " + exception + "\nMethodName is " + methodName + "\n";
+        return "The result of testing " + methodName + " was " + result + ".\n";
     }
 
 }

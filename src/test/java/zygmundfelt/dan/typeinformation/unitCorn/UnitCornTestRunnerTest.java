@@ -23,9 +23,9 @@ public class UnitCornTestRunnerTest {
         try {
             Class clazz = Class.forName("zygmundfelt.dan.typeinformation.unitCorn.DummyTest");
             String methodName = "setANumberTest";
-            String result = UnitCornTestRunner.runTest(clazz, methodName);
+            Result result = UnitCornTestRunner.runTest(clazz, methodName);
 
-            Assert.assertEquals(result, null);
+            Assert.assertEquals(result.getResult(), "success");
         } catch (Exception e){
             Assert.fail("Couldn't create instance of DummyTest." + e.getMessage());
         }
@@ -36,9 +36,9 @@ public class UnitCornTestRunnerTest {
         try {
             Class clazz = Class.forName("zygmundfelt.dan.typeinformation.unitCorn.DummyTest");
             String methodName = "setANumberTestFail";
-            String actual = UnitCornTestRunner.runTest(clazz, methodName);
+            Result result = UnitCornTestRunner.runTest(clazz, methodName);
 
-            Assert.assertNotEquals(actual, null);
+            Assert.assertNotEquals(result.getResult(), null);
         } catch (Exception e){
             Assert.fail("Couldn't create instance of DummyTest." + e.getMessage());
         }
@@ -49,9 +49,9 @@ public class UnitCornTestRunnerTest {
         try {
             Class clazz = Class.forName("zygmundfelt.dan.typeinformation.unitCorn.DummyTest");
             String methodName = "throwsIndexOutOfBoundsException";
-            String actual = UnitCornTestRunner.runTest(clazz, methodName);
+            Result result = UnitCornTestRunner.runTest(clazz, methodName);
 
-            Assert.assertNotEquals(actual, null);
+            Assert.assertNotEquals(result.getResult(), null);
         } catch (Exception e){
             Assert.fail("Couldn't create instance of DummyTest." + e.getMessage());
         }
@@ -63,9 +63,9 @@ public class UnitCornTestRunnerTest {
         try {
             Class clazz = Class.forName("zygmundfelt.dan.typeinformation.unitCorn.DummyTest");
             String methodName = "setANumberTest";
-            String result = UnitCornTestRunner.runTest(clazz, methodName);
+            Result result = UnitCornTestRunner.runTest(clazz, methodName);
 
-            Assert.assertNotEquals(result, null);
+            Assert.assertEquals(result.getResult(), null);
         } catch (Exception e){
             Assert.fail("Couldn't create instance of DummyTest." + e.getMessage());
         }
@@ -79,7 +79,7 @@ public class UnitCornTestRunnerTest {
         } catch (Exception e){
             Assert.assertTrue("Couldn't create instance of DummyTest.", false);
         }
-        Method[] methods = clazz.getDeclaredMethods();
+
         ArrayList<String> expected = UnitCornTestRunner.getJUnitAnnotatedMethods(clazz);
 
         ArrayList<String> actual = new ArrayList<String>();
@@ -99,6 +99,41 @@ public class UnitCornTestRunnerTest {
         }
 
         Assert.assertTrue(result);
+    }
+
+    @Test
+    public void runTestsTestDummy() {
+        Class clazz = null;
+        try {
+            clazz = Class.forName("zygmundfelt.dan.typeinformation.unitCorn.DummyTest");
+        } catch (Exception e){
+            Assert.assertTrue("Couldn't create instance of DummyTest.", false);
+        }
+
+        String expected = "The result of testing setANumberTest was success.\n" +
+                "The result of testing setANumberTestFail was java.lang.reflect.InvocationTargetException.\n";
+
+        String actual = UnitCornTestRunner.runTests(clazz);
+
+        Assert.assertEquals(expected,actual);
+    }
+
+    @Test
+    public void runTestsTestUnitCornTestRunner() {
+        Class clazz = null;
+        try {
+            clazz = Class.forName("zygmundfelt.dan.typeinformation.unitCorn.UnitCornTestRunner");
+        } catch (Exception e) {
+            Assert.assertTrue("Couldn't create instance of UnitCornTestRunner", false);
+        }
+
+        String expected =
+                "The result of testing getJUnitAnnotatedMethods was java.lang.IllegalArgumentException: wrong number of arguments.\n"+
+                        "The result of testing runTests was java.lang.IllegalArgumentException: wrong number of arguments.\n";
+
+        String actual = UnitCornTestRunner.runTests(clazz);
+
+        Assert.assertEquals(expected, actual);
     }
 
 }
