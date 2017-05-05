@@ -42,7 +42,7 @@ public class UnitCornTestRunner {
     }
 
     @Test
-    String runTests(Class cls) {
+    static String runTests(Class cls) {
 
         return null;
     }
@@ -54,7 +54,7 @@ public class UnitCornTestRunner {
         for(Method m : methods) {
             Annotation[] annotations = m.getAnnotations();
             for(Annotation a : annotations) {
-                if(a.toString().equals("@org.junit.Test")) {
+                if(a.toString().substring(0, 15).equals("@org.junit.Test")) {
                     annotatedMethods.add(m.getName());
                 }
             }
@@ -65,10 +65,22 @@ public class UnitCornTestRunner {
 
     public static void main(String[] args) {
         try {
-            ArrayList<String> list = getJUnitAnnotatedMethods(Class.forName("zygmundfelt.dan.typeinformation.unitCorn.UnitCornTestRunner"));
+            Class cls = Class.forName("zygmundfelt.dan.typeinformation.unitCorn.UnitCornTestRunner");
+            System.out.println(cls.getName());
+            ArrayList<String> list = getJUnitAnnotatedMethods(cls);
             for(String s : list) {
                 System.out.println(s);
             }
+            Method[] methods = cls.getDeclaredMethods();
+            for(Method m : methods) {
+                System.out.println(m.getName());
+                Annotation[] annotations = m.getAnnotations();
+                for(Annotation a : annotations) {
+                    System.out.println(a.toString());
+                }
+            }
+
+
         } catch (Exception e) {
             System.out.println("BOOOO.");
         }
