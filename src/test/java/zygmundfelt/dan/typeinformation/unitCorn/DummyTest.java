@@ -27,4 +27,14 @@ public class DummyTest {
         return;
     }
 
+    @Test
+    public void anotherTestFail() {
+        Assert.assertTrue(8 == 9);
+    }
+
+    @Test
+    public void anotherTestPass() {
+        Assert.assertTrue(7.5 == 7.5);
+    }
+
 }

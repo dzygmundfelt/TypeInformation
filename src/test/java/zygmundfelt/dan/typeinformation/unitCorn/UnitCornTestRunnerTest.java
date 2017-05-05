@@ -57,7 +57,9 @@ public class UnitCornTestRunnerTest {
         }
     }
 
-    //This test is designed to fail. Be happy!
+    /*
+    This test is designed to fail. Be happy!
+     */
     @Test
     public void runTestTestWhichShouldFail() {
         try {
@@ -85,6 +87,8 @@ public class UnitCornTestRunnerTest {
         ArrayList<String> actual = new ArrayList<String>();
         actual.add("setANumberTest");
         actual.add("setANumberTestFail");
+        actual.add("anotherTestPass");
+        actual.add("anotherTestFail");
 
         boolean result = true;
 
@@ -111,13 +115,18 @@ public class UnitCornTestRunnerTest {
         }
 
         String expected = "The result of testing setANumberTest was success.\n" +
-                "The result of testing setANumberTestFail was java.lang.reflect.InvocationTargetException.\n";
+                "The result of testing setANumberTestFail was java.lang.reflect.InvocationTargetException.\n" +
+                "The result of testing anotherTestPass was success.\n" +
+                "The result of testing anotherTestFail was java.lang.reflect.InvocationTargetException.\n";
 
         String actual = UnitCornTestRunner.runTests(clazz);
 
         Assert.assertEquals(expected,actual);
     }
 
+    /*
+    This test method sometimes reverses the order of the expected String, but that's OK for now.
+     */
     @Test
     public void runTestsTestUnitCornTestRunner() {
         Class clazz = null;

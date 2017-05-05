@@ -40,7 +40,10 @@ public class UnitCornTestRunner {
         return null;
     }
 
-    @Test //For test class and testing in main class below
+    /*
+    For testing in test class and testing in main class below
+     */
+    @Test
     static String runTests(Class cls) {
         StringBuilder sb = new StringBuilder();
         ArrayList<String> annotatedMethods = getJUnitAnnotatedMethods(cls);
@@ -53,7 +56,10 @@ public class UnitCornTestRunner {
         return sb.toString();
     }
 
-    @Test //For test class and testing in main class below
+    /*
+    For testing in test class and testing in main class below
+     */
+    @Test
     static ArrayList<String> getJUnitAnnotatedMethods(Class cls) {
         Method[] methods = cls.getDeclaredMethods();
         ArrayList<String> annotatedMethods = new ArrayList<String>();
