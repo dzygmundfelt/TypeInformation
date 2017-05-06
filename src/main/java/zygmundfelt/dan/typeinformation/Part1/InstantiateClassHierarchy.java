@@ -12,7 +12,10 @@ public class InstantiateClassHierarchy {
         do {
             try{
                 Object object = cl.newInstance();
-                classInstanceArrayList.add(object);
+                int modifier = object.getClass().getModifiers();
+                if(modifier != 0 && modifier != 2) {
+                    classInstanceArrayList.add(object);
+                }
                 cl = cl.getSuperclass();
             }
             catch (Exception e) {
@@ -20,16 +23,12 @@ public class InstantiateClassHierarchy {
             }
         } while(cl != null);
 
-        for(Object object : classInstanceArrayList) {
-            int modifier = object.getClass().getModifiers();
-            if(modifier == 0 || modifier == 2) {
-                classInstanceArrayList.remove(object);
-            }
-        }
-
         return classInstanceArrayList;
     }
 
+    /*
+    Used main for testing.
+     */
     public static void main(String[] args) {
         TreeMap map = new TreeMap();
         ArrayList list = new ArrayList();

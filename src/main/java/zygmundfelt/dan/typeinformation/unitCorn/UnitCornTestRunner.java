@@ -8,7 +8,7 @@ import org.junit.*;
 
 public class UnitCornTestRunner {
 
-    ArrayList<Result> results;
+    static ArrayList<Result> results;
 
     static Result runTest(Class cls, String methodName) {
 
@@ -50,6 +50,7 @@ public class UnitCornTestRunner {
 
         for(String s : annotatedMethods) {
             Result result = runTest(cls, s);
+            results.add(result); //Added this line to store results. Otherwise all this does is make a string.
             sb.append(result.toString());
         }
 

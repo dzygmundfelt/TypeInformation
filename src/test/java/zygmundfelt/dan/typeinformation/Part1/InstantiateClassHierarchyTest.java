@@ -1,6 +1,7 @@
 package zygmundfelt.dan.typeinformation.Part1;
 import org.junit.*;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.TreeMap;
@@ -55,6 +56,10 @@ public class InstantiateClassHierarchyTest {
         ArrayList<Object> actual = InstantiateClassHierarchy.instantiateClassHierarchy(list);
         //Then
         boolean result = true;
+
+        for(Object o : actual) {
+            actual.add(o.getClass());
+        }
 
         for(Object o : expected) {
             if(!actual.contains(o)) {
