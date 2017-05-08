@@ -9,10 +9,12 @@ import org.junit.*;
 public class UnitCornTestRunner {
 
     private ArrayList<Result> results;
+    private RunnerTestClass runnerTestClass;
     private Class cls;
 
     UnitCornTestRunner(Class cls) {
         results = new ArrayList<Result>();
+        this.runnerTestClass = new RunnerTestClass(cls);
         this.cls = cls;
     }
 
@@ -46,48 +48,28 @@ public class UnitCornTestRunner {
         return null;
     }
 
-    /*
-    For testing in test class and testing in main class below
-     */
-    @Test
-    String runTests() {
-        StringBuilder sb = new StringBuilder();
-        ArrayList<String> annotatedMethods = getJUnitAnnotatedMethods();
-
+    void runTests() {
+        ArrayList<String> annotatedMethods = runnerTestClass.getTestMethods();
         for(String s : annotatedMethods) {
             Result result = runTest(s);
-            results.add(result); //Added this line to store results. Otherwise all this does is make a string.
-            sb.append(result.toString());
+            results.add(result);
         }
-
-        return sb.toString();
     }
 
-    /*
-    For testing in test class and testing in main class below
-     */
-    @Test
-    ArrayList<String> getJUnitAnnotatedMethods() {
-        Method[] methods = cls.getDeclaredMethods();
-        ArrayList<String> annotatedMethods = new ArrayList<String>();
-
-        for(Method m : methods) {
-            Annotation[] annotations = m.getAnnotations();
-            for(Annotation a : annotations) {
-                if(a.toString().substring(0, 15).equals("@org.junit.Test")) {
-                    annotatedMethods.add(m.getName());
-                }
-            }
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for(Result r : results) {
+            sb.append(r);
         }
-
-        return annotatedMethods;
+        return sb.toString();
     }
 
     public static void main(String[] args) {
         try {
             Class cls = Class.forName("zygmundfelt.dan.typeinformation.unitCorn.UnitCornTestRunner");
             UnitCornTestRunner unitCornTestRunner = new UnitCornTestRunner(cls);
-            System.out.println(unitCornTestRunner.runTests());
+            unitCornTestRunner.runTests();
+            System.out.println(unitCornTestRunner.toString());
         } catch (Exception e) {
             System.out.println("BOOOO.");
         }
