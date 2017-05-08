@@ -14,10 +14,6 @@ public class Result {
         return result;
     }
 
-    public String getMethodName() {
-        return methodName;
-    }
-
     public String toString() {
         return "The result of testing " + methodName + " was " + result + ".\n";
     }
