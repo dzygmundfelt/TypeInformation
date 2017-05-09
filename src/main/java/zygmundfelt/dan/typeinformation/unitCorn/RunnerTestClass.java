@@ -66,6 +66,7 @@ public class RunnerTestClass {
         this.afterMethods = afterMethods;
     }
 
+
     ArrayList<String> getTestMethods() {
         return testMethods;
     }

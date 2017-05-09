@@ -53,9 +53,9 @@ public class UnitCornTestRunnerTest {
         Assert.assertEquals(result.getResult(), null);
     }
 
-    @Test
+/*    @Test
     public void getJUnitAnnotatedMethodsTest() {
-        ArrayList<String> expected = unitCorn.getJUnitAnnotatedMethods();
+        ArrayList<String> expected = runner.getJUnitTestMethods();
 
         ArrayList<String> actual = new ArrayList<String>();
         actual.add("setANumberTest");
@@ -76,7 +76,7 @@ public class UnitCornTestRunnerTest {
         }
 
         Assert.assertTrue(result);
-    }
+    }*/
 
     @Test
     public void runTestsTestDummy() {
@@ -85,7 +85,8 @@ public class UnitCornTestRunnerTest {
                 "The result of testing anotherTestPass was success.\n" +
                 "The result of testing anotherTestFail was java.lang.reflect.InvocationTargetException.\n";
 
-        String actual = unitCorn.runTests();
+        unitCorn.runTests();
+        String actual = unitCorn.toString();
 
         Assert.assertEquals(expected,actual);
     }

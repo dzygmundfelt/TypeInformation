@@ -30,7 +30,17 @@ public class UnitCornTestRunner {
         Method method = getMethod(methodName);
 
         try {
+            ArrayList<String> beforeMethods = runnerTestClass.getBeforeMethods();
+            for(String s : beforeMethods) {
+                Method beforeMethod = getMethod(s);
+                beforeMethod.invoke(o);
+            }
             method.invoke(o);
+            ArrayList<String> afterMethods = runnerTestClass.getAfterMethods();
+            for(String s : afterMethods) {
+                Method afterMethod = getMethod(s);
+                afterMethod.invoke(o);
+            }
         } catch (Exception e) {
             return new Result(methodName, e.toString());
         }
@@ -49,8 +59,8 @@ public class UnitCornTestRunner {
     }
 
     void runTests() {
-        ArrayList<String> annotatedMethods = runnerTestClass.getTestMethods();
-        for(String s : annotatedMethods) {
+        ArrayList<String> testMethods = runnerTestClass.getTestMethods();
+        for(String s : testMethods) {
             Result result = runTest(s);
             results.add(result);
         }
@@ -66,7 +76,7 @@ public class UnitCornTestRunner {
 
     public static void main(String[] args) {
         try {
-            Class cls = Class.forName("zygmundfelt.dan.typeinformation.unitCorn.UnitCornTestRunner");
+            Class cls = Class.forName("zygmundfelt.dan.typeinformation.unitCorn.DummyTest");
             UnitCornTestRunner unitCornTestRunner = new UnitCornTestRunner(cls);
             unitCornTestRunner.runTests();
             System.out.println(unitCornTestRunner.toString());
